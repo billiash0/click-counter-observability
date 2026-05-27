@@ -14,7 +14,7 @@ COPY app.py .
 # Настройки OpenTelemetry (автоматический сбор логов и метрик)
 ENV OTEL_SERVICE_NAME=click-counter-app   
 # Имя сервиса в SigNoz
-ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317  
+ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://signoz-otel-collector:4317
 # Адрес OTLP коллектора (gRPC)
 ENV OTEL_EXPORTER_OTLP_LOGS_PROTOCOL=grpc 
 # Используем gRPC для логов
