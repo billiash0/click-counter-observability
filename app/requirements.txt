@@ -10,3 +10,4 @@ opentelemetry-exporter-otlp>=1.27.0
 opentelemetry-instrumentation-flask>=0.48b0
 # Автоматический сбор логов из стандартного logging
 opentelemetry-instrumentation-logging>=0.48b0
+requests>=2.31.0

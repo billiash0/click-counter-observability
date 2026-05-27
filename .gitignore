@@ -13,3 +13,4 @@ query-service-data/
 # IDE
 .vscode/
 .idea/.env
+.env
