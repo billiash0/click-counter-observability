@@ -1,0 +1,12 @@
+# Веб-фреймворк
+Flask==2.3.3
+# Клиент для метрик Prometheus
+prometheus-client==0.19.0
+# OpenTelemetry – базовый дистрибутив
+opentelemetry-distro>=0.48b0
+# Экспортёр данных по протоколу OTLP
+opentelemetry-exporter-otlp>=1.27.0
+# Автоматическая инструментация Flask
+opentelemetry-instrumentation-flask>=0.48b0
+# Автоматический сбор логов из стандартного logging
+opentelemetry-instrumentation-logging>=0.48b0

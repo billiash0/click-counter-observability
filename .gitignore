@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Docker volumes (локальные данные)
+prometheus_data/
+clickhouse-data/
+query-service-data/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
