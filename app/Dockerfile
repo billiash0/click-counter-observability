@@ -20,6 +20,6 @@ ENV OTEL_EXPORTER_OTLP_LOGS_PROTOCOL=grpc
 # Используем gRPC для логов
 ENV OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true   
 # Автоматический перехват логов
-
+# ENV OTEL_SDK_DISABLED=true
 # Запуск приложения с автоинструментацией OpenTelemetry
 CMD ["opentelemetry-instrument", "python", "app.py"]

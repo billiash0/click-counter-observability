@@ -2,6 +2,38 @@ include:
   - signoz/deploy/docker/docker-compose.yaml
 
 services:
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    volumes:
+      - ./n8n_data:/home/node/.n8n          # папка для данных n8n
+      - ./whoami_workflow.json:/home/node/workflow.json  # смонтировать экспортированный workflow
+    environment:
+      - N8N_SECURE_COOKIE=false            # для локальной разработки
+      - N8N_USER_FOLDER=/home/node/.n8n
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=168
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    networks:
+      - signoz-net
+    depends_on:
+      - click-counter   # чтобы n8n запускался после приложения (не обязательно)
+    # Важно: при первом запуске нужно импортировать workflow.
+    # Самый простой способ – через entrypoint скрипт.
+    entrypoint: /bin/sh
+    command: >
+      -c "
+      if [ ! -f /home/node/.n8n/database.sqlite ]; then
+        echo 'First start – importing workflow...';
+        n8n import:workflow --input=/home/node/workflow.json;
+      fi;
+      n8n start
+      "
   click-counter:
     build: ./app
     container_name: click-counter-app

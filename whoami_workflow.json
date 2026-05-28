@@ -1,0 +1,104 @@
+{
+  "name": "whoami_bot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/whoami",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        -80
+      ],
+      "id": "e5ecb01f-2dc7-412a-8702-08045dadf276",
+      "name": "Webhook",
+      "webhookId": "8d6d9a7f-03d7-4c4c-ba67-efea44dc6aae"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": \"{{ $node['Set'].json.chat_id }}\",\n  \"text\": \"{{ $node['Set'].json.text }}\",\n  \"parse_mode\": \"HTML\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        176,
+        -80
+      ],
+      "id": "554bcfba-a52f-4f41-830b-98e579d9135d",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ac3f8a18-841f-46e2-959f-433ba69adf17",
+              "name": "chat_id",
+              "value": "{{ $env.TELEGRAM_CHAT_ID }}",
+              "type": "string"
+            },
+            {
+              "id": "70f1bb1f-63f7-444a-b58b-b749583323b0",
+              "name": "text",
+              "value": "=🕵️‍♂️ <b>Who Am I</b>\\nIP: {{$json.body.ip}}\\nUser-Agent: {{$json.headers['user-agent']}}\\nЯзык: {{$json.body.accept_language}}\\nРеферер: {{$json.body.referer}}\\nВремя: {{$json.body.timestamp}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -16,
+        -80
+      ],
+      "id": "fd84e61f-d794-46f9-9d07-f663c6ead47f",
+      "name": "Set"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "05ed0a3a-980b-459f-943e-57c665f38ba1",
+  "meta": {
+    "instanceId": "e3de2f13cb1cff1191f374f26704950d4912f56a2f16f22202ac1991e6ff6622"
+  },
+  "id": "7eIgslYH2L0At8Vq",
+  "tags": []
+}
